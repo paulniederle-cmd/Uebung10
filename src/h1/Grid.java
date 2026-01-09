@@ -29,18 +29,30 @@ public class Grid {
 	}
 
 	public void computeNextGen() {
-		for (int i = 0; i < gridArray.length; i++) {
-			for (int x = 0; x < gridArray[0].length; x++) {
-				gridArray[i][x].countLivingNeighbors(gridArray);
-			}
-		}
-		for (int i = 0; i < gridArray.length; i++) {
-			for (int x = 0; x < gridArray[0].length; x++) {
-				gridArray[i][x].setAlive(gridArray[i][x].isAliveNextGen());
-			}
-		}
+	    int rows = gridArray.length;
+	    int cols = gridArray[0].length;
 
+	    boolean[][] nextState = new boolean[rows][cols];
+
+	    for (int r = 0; r < rows; r++) {
+	        for (int c = 0; c < cols; c++) {
+	            nextState[r][c] = gridArray[r][c].isAliveNextGen();
+	        }
+	    }
+
+	    for (int r = 0; r < rows; r++) {
+	        for (int c = 0; c < cols; c++) {
+	            gridArray[r][c].setAlive(nextState[r][c]);
+	        }
+	    }
+
+	    for (int r = 0; r < rows; r++) {
+	        for (int c = 0; c < cols; c++) {
+	            gridArray[r][c].countLivingNeighbors(gridArray);
+	        }
+	    }
 	}
+
 
 	public void computeGeneration(int n) {
 		for (int i = 0; i < n; i++) {
